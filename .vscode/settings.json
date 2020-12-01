@@ -1,0 +1,21 @@
+{
+    "cSpell.words": [
+        "Flexbox",
+        "Knott",
+        "camelcase",
+        "deepmerge",
+        "dimgray",
+        "hacs",
+        "hass",
+        "homeassistant",
+        "jayknott",
+        "listbox",
+        "markdownlint",
+        "nowrap",
+        "serveopts",
+        "stylelint",
+        "tabindex",
+        "typecheck"
+    ],
+    "editor.formatOnSave": true
+}
