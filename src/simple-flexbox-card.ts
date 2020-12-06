@@ -28,7 +28,9 @@ const cardHelpers = (window as any).loadCardHelpers()
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  SIMPLE-FLEXBOX-CARD  \n%c  ${localize('common.version')} ${CARD_VERSION}            `,
+  `%c  SIMPLE-FLEXBOX-CARD  \n%c  ${localize(
+    'common.version',
+  )} ${CARD_VERSION}        `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
@@ -40,7 +42,6 @@ console.info(
   name: 'Simple Flexbox Card',
   description: 'Display a simple flexbox in Lovelace dashboards.',
 });
-
 
 @customElement('simple-flexbox-card')
 export class SimpleFlexboxCard extends LitElement {
@@ -78,14 +79,17 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   createError(error: Error, config: LovelaceCardConfig): Promise<LovelaceCard> {
-    return this.createElement("hui-error-card", {
-      type: "error",
+    return this.createElement('hui-error-card', {
+      type: 'error',
       error,
       config,
     });
-  };
+  }
 
-  async createElement(tag: string, config: LovelaceCardConfig): Promise<LovelaceCard> {
+  async createElement(
+    tag: string,
+    config: LovelaceCardConfig,
+  ): Promise<LovelaceCard> {
     if (cardHelpers) {
       const cardHelper = await cardHelpers;
       return cardHelper.createCardElement(config);
@@ -100,16 +104,20 @@ export class SimpleFlexboxCard extends LitElement {
       return this.createError(err.message, config);
     }
 
-    return element;
-  };
+    console.log(element);
 
-  async createCardElement(cardConfig: LovelaceCardConfig): Promise<LovelaceCard> {
+    return element;
+  }
+
+  async createCardElement(
+    cardConfig: LovelaceCardConfig,
+  ): Promise<LovelaceCard> {
     let tag = cardConfig.type;
 
-    if (tag.startsWith("divider")) {
+    if (tag.startsWith('divider')) {
       tag = `hui-divider-row`;
-    } else if (tag.startsWith("custom:")) {
-      tag = tag.substr("custom:".length);
+    } else if (tag.startsWith('custom:')) {
+      tag = tag.substr('custom:'.length);
     } else {
       tag = `hui-${tag}-card`;
     }
@@ -119,14 +127,14 @@ export class SimpleFlexboxCard extends LitElement {
     element.hass = this.hass;
 
     element.addEventListener(
-      "ll-rebuild",
+      'll-rebuild',
       (ev) => {
         ev.stopPropagation();
         this.createCardElement(cardConfig).then(() => {
           this.renderCard();
         });
       },
-      { once: true }
+      { once: true },
     );
 
     return element;
@@ -143,33 +151,11 @@ export class SimpleFlexboxCard extends LitElement {
 
   // https://lit-element.polymer-project.org/guide/templates
   protected render(): TemplateResult | void {
-    // TODO Check for stateObj or other necessary things and render a warning if missing
-    if (this.config.show_warning) {
-      return this._showWarning(localize('common.show_warning'));
-    }
-
-    if (this.config.show_error) {
-      return this._showError(localize('common.show_error'));
-    }
-
     const items = this._refCards.map((card) => html`<li>${card}</li>`);
 
-    return html`<ul class="flex-container">${items}</ul>`;
-  }
-
-  private _showWarning(warning: string): TemplateResult {
-    return html`<hui-warning>${warning}</hui-warning>`;
-  }
-
-  private _showError(error: string): TemplateResult {
-    const errorCard = document.createElement('hui-error-card');
-    errorCard.setConfig({
-      type: 'error',
-      error,
-      origConfig: this.config,
-    });
-
-    return html`${errorCard}`;
+    return html`<ul class="flex-container">
+      ${items}
+    </ul>`;
   }
 
   // https://lit-element.polymer-project.org/guide/styles
