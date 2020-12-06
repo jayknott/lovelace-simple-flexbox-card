@@ -69,6 +69,8 @@ export class SimpleFlexboxCard extends LitElement {
 
     this.config = config;
     if (config.cards) this._cards = config.cards;
+
+    if (this.hass) this.renderCard();
   }
 
   renderCard() {
