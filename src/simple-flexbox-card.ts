@@ -83,9 +83,9 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   setConfig(config: SimpleFlexboxCardConfig): void {
-    if (!config?.cards || !Array.isArray(config.cards)) {
-      throw new Error('Card config incorrect');
-    }
+    // if (!config?.cards || !Array.isArray(config.cards)) {
+    //   throw new Error('Card config incorrect');
+    // }
 
     this._config = config;
     this._cards = config.cards;
@@ -94,6 +94,8 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   renderCard(): void {
+    if (!this._cards) this._refCards = [];
+
     const promises = this._cards.map((config, config_i) =>
       this.createCardElement(config, config_i),
     );
@@ -133,12 +135,15 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   render() {
-    if (!this._config || !this._hass || !this._refCards) {
+    if (!this._config || !this._hass) {
       return html``;
     }
 
-    return html`<ul class="flex-container">
-      ${this._refCards.map((card) => html`<li>${card}</li>`)}
+    return html`<ul
+      class="flex-container"
+      style="margin-bottom: ${this._config.margin_bottom || '20px'};"
+    >
+      ${[this._refCards || []].map((card) => html`<li>${card}</li>`)}
     </ul>`;
   }
 
