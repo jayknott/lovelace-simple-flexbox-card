@@ -90,7 +90,10 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   renderCard(): void {
-    if (!this._cards) this._refCards = [];
+    if (!this._cards) {
+      this._refCards = [];
+      return;
+    }
 
     const promises = this._cards.map((config, config_i) =>
       this.createCardElement(config, config_i),
