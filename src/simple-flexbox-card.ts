@@ -62,7 +62,6 @@ const createCardFromHelper = async (
 export class SimpleFlexboxCard extends LitElement {
   @property({ attribute: false }) public _hass!: HomeAssistant;
   @internalProperty() private _config!: SimpleFlexboxCardConfig;
-  @internalProperty() private _cards: Array<LovelaceCardConfig> = [];
   @internalProperty() private _refCards?: Array<LovelaceCard>;
 
   public static getStubConfig(): object {
@@ -84,18 +83,17 @@ export class SimpleFlexboxCard extends LitElement {
 
   setConfig(config: SimpleFlexboxCardConfig): void {
     this._config = config;
-    this._cards = config.cards;
 
     if (this._hass) this.renderCard();
   }
 
   renderCard(): void {
-    if (!this._cards) {
-      this._refCards = [];
+    if (!this._config.cards) {
+      this._refCards = undefined;
       return;
     }
 
-    const promises = this._cards.map((config, config_i) =>
+    const promises = this._config.cards.map((config, config_i) =>
       this.createCardElement(config, config_i),
     );
     Promise.all(promises).then((cards) => (this._refCards = cards));
@@ -142,7 +140,7 @@ export class SimpleFlexboxCard extends LitElement {
       class="flex-container"
       style="margin-bottom: ${this._config.margin_bottom || '20px'};"
     >
-      ${[this._refCards || []].map((card) => html`<li>${card}</li>`)}
+      ${(this._refCards || []).map((card) => html`<li>${card}</li>`)}
     </ul>`;
   }
 

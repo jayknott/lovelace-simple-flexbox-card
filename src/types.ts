@@ -1,4 +1,8 @@
-import { LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } from 'custom-card-helpers';
+import {
+  LovelaceCard,
+  LovelaceCardConfig,
+  LovelaceCardEditor,
+} from 'custom-card-helpers';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -9,6 +13,7 @@ declare global {
 
 export interface SimpleFlexboxCardConfig extends LovelaceCardConfig {
   type: string;
-  cards: Array<LovelaceCardConfig>
+  cards?: Array<LovelaceCardConfig>;
+  margin_bottom?: string;
   test_gui?: boolean;
 }
