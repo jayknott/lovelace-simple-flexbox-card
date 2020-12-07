@@ -83,14 +83,11 @@ export class SimpleFlexboxCard extends LitElement {
   }
 
   setConfig(config: SimpleFlexboxCardConfig): void {
-    // if (!config?.cards || !Array.isArray(config.cards)) {
-    //   throw new Error('Card config incorrect');
-    // }
-
     this._config = config;
     this._cards = config.cards;
 
     if (this._hass) this.renderCard();
+    console.log('test');
   }
 
   renderCard(): void {
