@@ -1,5 +1,5 @@
 {
-  "name": "simple_flexbox_card",
+  "name": "lovelace-simple-flexbox-card",
   "version": "0.1.0",
   "description": "Lovelace card display a simple flexbox.",
   "module": "simple-flexbox-card.js",
